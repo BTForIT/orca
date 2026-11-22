@@ -42,6 +42,7 @@ import {
   settingsScreenStyles
 } from '../../../src/settings/settings-screen-frame'
 import { HostOrcaVersionSection } from '../../../src/host-screen/identity/HostOrcaVersionSection'
+import { HostAutoConnectSection } from '../../../src/host-screen/identity/HostAutoConnectSection'
 
 export default function EditHostScreen() {
   useMobileColorScheme()
@@ -309,6 +310,8 @@ export default function EditHostScreen() {
                 }}
               />
             </SettingsSection>
+
+            <HostAutoConnectSection host={host} disabled={saving} />
 
             <HostOrcaVersionSection />
 

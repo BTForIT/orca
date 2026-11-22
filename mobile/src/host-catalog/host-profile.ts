@@ -23,6 +23,8 @@ export type HostProfile = {
   deviceToken: string
   publicKeyB64: string
   lastConnected: number
+  /** Home connects to it on its own unless this is false; a manual Connect always works. */
+  autoConnect?: boolean
   /** Relay routing, joined from the overlay; only `setRelayRouting` and pairing write it. */
   relay?: MobileRelayEndpoint
 }
@@ -64,7 +66,8 @@ export const StoredHostProfileSchema = z.object({
   ...hostNameIdentityFields,
   endpoint: z.string().min(1),
   publicKeyB64: z.string().min(1),
-  lastConnected: z.number().finite()
+  lastConnected: z.number().finite(),
+  autoConnect: salvagedOptional('autoConnect', z.boolean()).optional()
 })
 
 export type StoredHostProfile = z.infer<typeof StoredHostProfileSchema>

@@ -280,6 +280,8 @@
       "hostNamePlaceholder": "Host name",
       "address": "Address",
       "connectionPreview": "Connects to {{endpoint}}",
+      "autoConnect": "Connect automatically",
+      "autoConnectFooter": "When off, Home leaves this host disconnected until you choose Connect.",
       "updateStepsServiceManager": "Update it with its package manager or service manager.",
       "updateStepsSourceCheckout": "Update it from its source checkout.",
       "updateStepsServer": "Update Orca on the server, then restart it.",

@@ -190,7 +190,13 @@ export async function savePairedHost(host: HostProfile): Promise<void> {
         next = hosts
           .filter(({ id }) => !duplicateHostIds.has(id))
           .map((candidate) =>
-            candidate.id === stored.id ? mergeHostNameIdentity(stored, candidate) : candidate
+            candidate.id === stored.id
+              ? {
+                  ...mergeHostNameIdentity(stored, candidate),
+                  // Re-pairing renews credentials; it must not turn Connect automatically back on.
+                  ...(candidate.autoConnect === false ? { autoConnect: false } : {})
+                }
+              : candidate
           )
       } else {
         next = [...hosts.filter(({ id }) => !duplicateHostIds.has(id)), stored]
@@ -311,6 +317,20 @@ export async function updateHostNameAndEndpoint(
     }
     const next = hosts.slice()
     next[index] = updated
+    return next
+  })
+}
+
+// Absent means on, so only an opted-out host carries the field.
+export async function setHostAutoConnect(hostId: string, autoConnect: boolean): Promise<void> {
+  await mutateStoredHosts((hosts) => {
+    const index = hosts.findIndex((host) => host.id === hostId)
+    if (index === -1) {
+      throw new Error('Host not found')
+    }
+    const { autoConnect: _previous, ...rest } = hosts[index]!
+    const next = hosts.slice()
+    next[index] = autoConnect ? rest : { ...rest, autoConnect: false }
     return next
   })
 }

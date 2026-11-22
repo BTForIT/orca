@@ -32,3 +32,6 @@ export function updateHostNameAndEndpoint(
 ): Promise<void> {
   return Promise.resolve()
 }
+
+export const setHostAutoConnect = (_hostId: string, _autoConnect: boolean): Promise<void> =>
+  Promise.resolve()
