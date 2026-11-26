@@ -249,7 +249,8 @@ async function materializeLegacyRollout(
   )
 }
 
-async function installRollout(sourcePath: string, targetPath: string): Promise<void> {
+/** Links, else copies, `sourcePath` to `targetPath`; a different file already there throws. */
+export async function installRollout(sourcePath: string, targetPath: string): Promise<void> {
   await mkdir(dirname(targetPath), { recursive: true })
   try {
     await link(sourcePath, targetPath)
